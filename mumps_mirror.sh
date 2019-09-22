@@ -1,10 +1,19 @@
 #!/bin/bash
 
-find /srv/02-mumps.pl/www/tinco.pair.com -name "*.tmp" -delete
+#find /srv/02-mumps.pl/www/tinco.pair.com -name "*.tmp" -delete
 
-httrack "http://tinco.pair.com/bhaskar/gtm/doc/" -O "/srv/02-mumps.pl/www" -v -%F "<!-- Mirrored [from host %s [file %s]] -->" --retries=10 --timeout=90 --sockets=8 --mirror || :
+#httrack "http://tinco.pair.com/bhaskar/gtm/doc/" -O "/srv/02-mumps.pl/www" -v -%F "<!-- Mirrored [from host %s [file %s]] -->" --retries=10 --timeout=90 --sockets=8 --mirror || :
 
-echo "httrack finished"
+#echo "httrack finished"
+
+
+cd /srv/02-mumps.pl/src
+
+wget --mirror --convert-links --adjust-extension --page-requisites --no-parent "http://tinco.pair.com/bhaskar/gtm/doc/"
+
+git grep -l '013851696010511438525:' | xargs sed -i "s/013851696010511438525:.*/008883911881491959604:nja0buk6qz4\';/g"
+
+rsync -r /srv/02-mumps.pl/src/ /srv/02-mumps.pl/www/
 
 cd /srv/02-mumps.pl/www/tinco.pair.com/bhaskar/gtm/doc
 
@@ -19,9 +28,8 @@ done
 
 }
 
-time charconv
+#time charconv
 
-git grep -l '013851696010511438525:' | xargs sed -i "s/013851696010511438525:.*/008883911881491959604:nja0buk6qz4\';/g"
 
 
 pdfs="books/ao/UNIX_manual/ao_UNIX_screen.pdf books/pg/UNIX_manual/pg_UNIX_screen.pdf books/mr/manual/mr_screen.pdf"
