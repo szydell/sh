@@ -16,21 +16,6 @@ rsync -r /srv/02-mumps.pl/src/tinco.pair.com/bhaskar/gtm/doc/ /srv/02-mumps.pl/w
 
 cd /srv/02-mumps.pl/www/
 
-function charconv {
-
-FILELIST=$(find . -type f -name "*.html")
-
-for file in $FILELIST
-do
-  iconv --from-code='latin1' --to-code='ASCII//TRANSLIT' "$file" | sponge "$file"
-done
-
-}
-
-#time charconv
-
-
-
 pdfs="books/ao/UNIX_manual/ao_UNIX_screen.pdf books/pg/UNIX_manual/pg_UNIX_screen.pdf books/mr/manual/mr_screen.pdf"
 
 for pdf in $pdfs
