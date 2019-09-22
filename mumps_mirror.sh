@@ -1,21 +1,20 @@
 #!/bin/bash
 
-#find /srv/02-mumps.pl/www/tinco.pair.com -name "*.tmp" -delete
-
-#httrack "http://tinco.pair.com/bhaskar/gtm/doc/" -O "/srv/02-mumps.pl/www" -v -%F "<!-- Mirrored [from host %s [file %s]] -->" --retries=10 --timeout=90 --sockets=8 --mirror || :
-
-#echo "httrack finished"
-
 
 cd /srv/02-mumps.pl/src
+rm -rf *
+rm -rf .git
 
 wget --mirror --convert-links --adjust-extension --page-requisites --no-parent "http://tinco.pair.com/bhaskar/gtm/doc/"
 
+git init
+git add tinco*
+
 git grep -l '013851696010511438525:' | xargs sed -i "s/013851696010511438525:.*/008883911881491959604:nja0buk6qz4\';/g"
 
-rsync -r /srv/02-mumps.pl/src/ /srv/02-mumps.pl/www/
+rsync -r /srv/02-mumps.pl/src/tinco.pair.com/bhaskar/gtm/doc/ /srv/02-mumps.pl/www/
 
-cd /srv/02-mumps.pl/www/tinco.pair.com/bhaskar/gtm/doc
+cd /srv/02-mumps.pl/www/
 
 function charconv {
 
