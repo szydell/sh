@@ -12,6 +12,22 @@ git add tinco*
 
 git grep -l '013851696010511438525:' | xargs sed -i "s/013851696010511438525:.*/008883911881491959604:nja0buk6qz4\';/g"
 
+
+function charconv {
+
+FILELIST=$(find . -type f -name "*.html")
+
+for file in $FILELIST
+do
+  iconv --from-code='latin1' --to-code='ASCII//TRANSLIT' "$file" | sponge "$file"
+done
+
+}
+
+time charconv
+
+
+
 rsync -r /srv/02-mumps.pl/src/tinco.pair.com/bhaskar/gtm/doc/ /srv/02-mumps.pl/www/
 
 cd /srv/02-mumps.pl/www/
