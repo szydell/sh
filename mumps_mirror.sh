@@ -1,17 +1,19 @@
 #!/bin/bash
 
+_date=$(date +'%Y%m%d-%H:%M')
+
 
 cd /srv/02-mumps.pl/src
-rm -rf *
-rm -rf .git
+#rm -rf *
+#rm -rf .git
+
+git init
 
 wget --mirror --convert-links --adjust-extension --page-requisites --no-parent "http://tinco.pair.com/bhaskar/gtm/doc/"
 
-git init
 git add tinco*
 
 git grep -l '013851696010511438525:' | xargs sed -i "s/013851696010511438525:.*/008883911881491959604:nja0buk6qz4\';/g"
-
 
 function charconv {
 
@@ -26,9 +28,10 @@ done
 
 time charconv
 
+git commit -a -m "stc ${_date}"
 
 
-rsync -r /srv/02-mumps.pl/src/tinco.pair.com/bhaskar/gtm/doc/ /srv/02-mumps.pl/www/
+rsync -r --exclude '.git/*' /srv/02-mumps.pl/src/tinco.pair.com/bhaskar/gtm/doc/ /srv/02-mumps.pl/www/
 
 cd /srv/02-mumps.pl/www/
 
@@ -56,5 +59,4 @@ git add *.pdf && git commit -m "pdf update $(date +'%Y%m%d-%H:%M')" || :
 git add *.html && git commit -m "html update $(date +'%Y%m%d-%H:%M')" || :
 git add * && git commit -m "$(date +'%Y%m%d-%H:%M')" || :
 git push || :
-
 
